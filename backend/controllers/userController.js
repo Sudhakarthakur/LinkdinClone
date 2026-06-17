@@ -40,7 +40,7 @@ export const register = async (req, res) => {
 
         const user = await User.findOne({ email });
         if (user)
-            return res.status(400).json({ message: "User allready Exists" })
+            return res.status(404).json({ message: "User allready Exists" })
 
         const hashPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
@@ -55,7 +55,7 @@ export const register = async (req, res) => {
 
 
     } catch (err) {
-        res.status(500).json({ message: err.message })
+        return res.status(500).json({ message: err.message })
     }
 }
 
@@ -77,10 +77,10 @@ export const login = async (req, res) => {
         const token = crypto.randomBytes(32).toString("hex");
 
         await User.updateOne({ _id: existUser._id }, { token })
-        return res.json({ token })
+        return res.json({ token: token })
 
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        return res.status(500).json({ message: err.message });
     }
 }
 
@@ -109,7 +109,7 @@ export const uploadProfilePicture = async (req, res) => {
 
 
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        return res.status(500).json({ message: err.message });
     }
 }
 

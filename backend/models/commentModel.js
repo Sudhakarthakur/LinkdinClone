@@ -10,11 +10,11 @@ const comments = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post"
     },
-    body: {
+    commnet: {
         type: String,
         required: true
     }
 })
 
-const comments = mongoose.model("comments", comments);
-export default comments;
+const Comments = mongoose.model("comments", comments);
+export default Comments;
