@@ -12,8 +12,7 @@ export const loginUser = createAsyncThunk(
             })
 
             if (response.data.token) {
-                localStorage.setItem("token", response.data.token);
-                return response.data;
+                localStorage.setItem("token ", response.data.token)
             } else {
                 return thunkApi.rejectWithValue({
                     message: "user not found"
@@ -21,15 +20,13 @@ export const loginUser = createAsyncThunk(
             }
 
         } catch (err) {
-            return thunkApi.rejectWithValue(err.response?.data || {
-                message: err.message
-            })
+            return thunkApi.rejectWithValue(err.response.data)
         }
     }
 )
 
 export const registerUser = createAsyncThunk(
-    "user/register",
+    "usre/register",
     async (user, thunkApi) => {
         try {
             const response = await client.post(`/register`, {
@@ -41,27 +38,7 @@ export const registerUser = createAsyncThunk(
             })
             return response.data;
         } catch (err) {
-            return thunkApi.rejectWithValue(err.response?.data || {
-                message: err.message
-            })
+            return thunkApi.rejectWithValue(err.response.data);
         }
     }
-)
-
-
-export const getAllUsers = createAsyncThunk(
-    "user/getAllUsers", async (_, thunkApi) => {
-
-        try {
-
-            const response = await client.get("/user/get_all_users");
-            return thunkApi.fulfillWithValue(response.data);
-
-        } catch (err) {
-            return thunkApi.rejectWithValue(err.response?.data || {
-                message: err.message
-            })
-        }
-    }
-
 )

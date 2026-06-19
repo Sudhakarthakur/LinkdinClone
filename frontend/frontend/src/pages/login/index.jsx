@@ -25,18 +25,18 @@ export default function LoginComponent() {
         if (authState.loggedIn) {
             router.push("/dashboard")
         }
-    }, [authState.loggedIn, router])
+    }, [authState.loggedIn])
 
 
     useEffect(() => {
         dispatch(emptyMessage())
-    }, [userLogginMethode, dispatch])
+    }, [userLogginMethode])
 
     useEffect(() => {
         if (localStorage.getItem("token")) {
             router.push("/dashboard")
         }
-    }, [router])
+    })
 
     const handleRegister = () => {
         console.log("register");
@@ -64,8 +64,8 @@ export default function LoginComponent() {
                                 <input onChange={(e) => setUsername(e.target.value)} className={styles.inputfield} type='text' placeholder='Username' />
                                 <input onChange={(e) => setName(e.target.value)} className={styles.inputfield} type='text' placeholder='Name' />
                             </div>}
-                            <input onChange={(e) => setEmail(e.target.value)} className={styles.inputfield} type='email' placeholder='Email' />
-                            <input onChange={(e) => setPassword(e.target.value)} className={styles.inputfield} type='password' placeholder='Password' />
+                            <input onChange={(e) => setEmail(e.target.value)} className={styles.inputfield} type='text' placeholder='Email' />
+                            <input onChange={(e) => setPassword(e.target.value)} className={styles.inputfield} type='text' placeholder='Password' />
 
 
                             <div onClick={() => {

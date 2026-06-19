@@ -145,13 +145,13 @@ export const updateUserProfile = async (req, res) => {
 
 
 export const getUserAndProfile = async (req, res) => {
-    const { token } = req.query;
+    const { token } = req.body;
     try {
         const user = await User.findOne({ token: token })
         if (!user) {
             return res.status(404).json({ message: "User not found" })
         }
-        const userProfile = await Profile.findOne({ userId: user._id }).populate('userId', 'name email username profilePicture ');
+        const userProfile = await Profile.findOne({ userId: user._id }).populate('userId', 'name email username profilePicture');
         return res.json(userProfile);
     } catch (err) {
         return res.status(500).json({ message: err.message })
