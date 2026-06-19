@@ -1,17 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { loginUser, registerUser } from "../../action/authAction"
+import { getAllUsers, loginUser, registerUser } from "../../action/authAction"
+import { getAboutUser } from "../../action/postAction"
 
 
 const InitalState = {
-    user: [],
+    user: undefined,
+    all_users: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
     loggedIn: false,
+    isTokenThere: false,
     message: "",
     profileFeatch: false,
     connections: [],
-    connectionRequest: []
+    connectionRequest: [],
+    all_profiles_fetched: false
 }
 
 const authSlice = createSlice(
@@ -26,6 +30,12 @@ const authSlice = createSlice(
             emptyMessage: (state) => {
                 state.message = "";
             },
+            setTokenIsThere: (state) => {
+                state.isTokenThere = true;
+            },
+            setTokenIsNotThere: (state) => {
+                state.isTokenThere = false;
+            }
         },
         extraReducers: (builder) => {
             builder.addCase(loginUser.pending, (state) => {
@@ -59,10 +69,24 @@ const authSlice = createSlice(
                     state.isError = true
                     state.message = action.payload?.message || "Registration failed"
                 })
+                .addCase(getAboutUser.fulfilled, (state, action) => {
+                    state.isLoading = false;
+                    state.isError = false;
+                    state.profileFeatch = true;
+                    state.user = action.payload;
+                    state.connections = action.payload.connections;
+                    state.connectionRequest = action.payload.connectionRequest
+                })
+                .addCase(getAllUsers.fulfilled, (state, action) => {
+                    state.isLoading = false;
+                    state.isError = false;
+                    state.all_profiles_fetched = true;
+                    state.all_users = action.payload.profiles;
+                })
         }
     }
 )
 
-export const { emptyMessage, reset } = authSlice.actions;
+export const { emptyMessage, reset, setTokenIsNotThere, setTokenIsThere } = authSlice.actions;
 
 export default authSlice.reducer;

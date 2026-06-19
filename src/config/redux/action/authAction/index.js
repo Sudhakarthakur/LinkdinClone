@@ -47,3 +47,21 @@ export const registerUser = createAsyncThunk(
         }
     }
 )
+
+
+export const getAllUsers = createAsyncThunk(
+    "user/getAllUsers", async (_, thunkApi) => {
+
+        try {
+
+            const response = await client.get("/user/get_all_users");
+            return thunkApi.fulfillWithValue(response.data);
+
+        } catch (err) {
+            return thunkApi.rejectWithValue(err.response?.data || {
+                message: err.message
+            })
+        }
+    }
+
+)
