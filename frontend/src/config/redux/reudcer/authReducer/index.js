@@ -15,7 +15,8 @@ const InitalState = {
     profileFeatch: false,
     connections: [],
     connectionRequest: [],
-    all_profiles_fetched: false
+    all_profiles_fetched: false,
+    profilePicture: ""
 }
 
 const authSlice = createSlice(

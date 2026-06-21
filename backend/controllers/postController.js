@@ -100,7 +100,8 @@ export const comment = async (req, res) => {
 
 
 export const get_comment_by_post = async (req, res) => {
-    const { post_id } = req.body;
+    const { post_id } = req.query;
+    console.log(req.query)
 
     try {
         const post = await Post.findOne({ _id: post_id });
@@ -148,7 +149,7 @@ export const incrementLikes = async (req, res) => {
         }
 
         post.likes = post.likes + 1;
-        await post.sava();
+        await post.save();
         return res.json({ message: "Post liked" })
     } catch (err) {
         return res.status(500).json({ message: err.message })

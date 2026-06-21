@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getAllPost } from "../../action/postAction"
+import { getAllComment, getAllPosts } from "../../action/postAction"
 
 
 const initialState = {
@@ -25,21 +25,25 @@ const postSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getAllPost.pending, (state) => {
+            .addCase(getAllPosts.pending, (state) => {
                 state.isLoading = true,
                     state.message = "Featching all the posts"
             })
-            .addCase(getAllPost.fulfilled, (state, action) => {
+            .addCase(getAllPosts.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isError = false;
                 state.postFeatch = true;
-                state.posts = action.payload.posts;
+                state.posts = action.payload.posts.reverse();
             })
-            .addCase(getAllPost.rejected, (state, action) => {
+            .addCase(getAllPosts.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload?.message || "Post featching failed"
             })
+            .addCase(getAllComment.fulfilled, (state, action) => {
+                state.postId = action.payload.post_id
+            })
+
     }
 })
 

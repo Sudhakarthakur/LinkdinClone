@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }) {
             router.push("/login")
         }
         dispatch(setTokenIsThere());
-    })
+    }, [])
 
     const router = useRouter();
     return (
